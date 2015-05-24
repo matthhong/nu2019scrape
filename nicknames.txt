@@ -1,15 +1,3 @@
-# MOST COMMON NICKNAMES FOR FIRST NAMES
-#
-# Prepared by Deron Meranda <deron.meranda@gmail.com>
-#
-# Based upon 1990 US Census Data and other various sources
-# Some data also from http://www.censusdiggins.com/
-#
-# Column 1: Nickname
-# Column 2: Formal name
-# Column 3: Substitution likelyhood (0=never, 1=always)
-#    (note, column 3 is mostly guesswork)
-#
 ABBIE	ABIGAIL		0.80
 ABBY	ABIGAIL		0.81
 ABE	ABRAHAM		0.80
@@ -224,7 +212,7 @@ GAIL	ABIGAIL		0.55
 GENE	EUGENE		0.55
 GEOFF	GEOFFREY	0.80
 GEOFF	JEFFREY		0.80
-GEORGE  GEORGINE        0.50
+GEORGE	GEORGINE	0.50
 GERRIE	GERALDINE	0.75
 GERRY	GERALD		0.60
 GERRY	GERALDINE	0.70
