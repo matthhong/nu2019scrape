@@ -2,24 +2,32 @@ from collections import defaultdict as ddict
 import csv
 import mechanize
 import pythonParser as parser
-from bs4 import BeautifulSoup as bs
+from bs4 import BeautifulSoup as Soup
+
+br = mechanize.Browser()
+br.set_handle_robots(False)
+
+br.open('http://directory.northwestern.edu/?a=1')
 
 def searchName(firstName, lastName):
-	br = mechanize.Browser()
-	br.set_handle_robots(False)
-
-	br.open('http://directory.northwestern.edu/?a=1')
-
 	br.select_form('phadv')
 	br.form['first_name'] = firstName
 	br.form['last_name'] = lastName
 	br.form['affiliations'] = ['student']
-
 	br.submit()
 
-	response = br.response()
+	response = br.response().read()
+	soup = Soup(response)
 
-	print response.read()
+	links = soup.body.find(id='content').findAll('a')
+
+	emails = []
+	for link in links:
+		target = link.get('href')
+		if 'mailto' in target:
+			emails.append(target[7:])
+
+	return emails
 
 def getNameDict(csvFile, txtFile):
 	nameDict = ddict(list)
