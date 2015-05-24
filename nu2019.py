@@ -1,6 +1,7 @@
 from collections import defaultdict as ddict
 import csv
 import mechanize
+from multiprocessing import cpu_count, current_process, Process, Queue
 import pythonParser as parser
 from bs4 import BeautifulSoup as Soup
 
@@ -22,12 +23,26 @@ def searchName(firstName, lastName):
 	links = soup.body.find(id='content').findAll('a')
 
 	emails = []
-	for link in links:
+	for link in links[:-2]:
 		target = link.get('href')
 		if 'mailto' in target:
-			emails.append(target[7:])
+			emails.append([firstName,lastName,target[7:]])
 
 	return emails
+
+def retrieveEmails(listOfNames):
+	with open('../emails.csv', 'w') as outfile:
+		writer = csv.writer(outfile)
+
+		i = 0
+		for name in listOfNames:
+			emails = searchName(name[0], name[1])
+
+			for email in emails:
+				writer.writerow(email)
+				i+=1
+
+			print i
 
 def getNameDict(csvFile, txtFile):
 	nameDict = ddict(list)
@@ -68,5 +83,5 @@ def get2019Names(txtfile):
 
 	return possibleNames
 
-
-
+def main():
+	retrieveEmails(get2019Names('../2019 names.txt'))
